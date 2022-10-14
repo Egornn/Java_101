@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-
+ 
 import javax.swing.event.SwingPropertyChangeSupport;
 
 import java.util.*;
@@ -8,15 +8,15 @@ import java.util.*;
 public class Task1 {
 
     public static void main(String[] args) {
-        //FindFactorial(args);
-        // TriangleNumber(5);
-        // PrimeRange(1, 1000);
-        // float a = 4.43f;
-        // float b = 2.57f;
-        // System.out.println(Calc(a, b, "+"));
-        // System.out.println(Calc(a, b, "/"));
-        // System.out.println(Calc(a, b, "**"));
-        String equation = "1? + ?? = 33";
+        FindFactorial(args);
+        TriangleNumber(5);
+        PrimeRange(1, 1000);
+        float a = 4.43f;
+        float b = 2.57f;
+        System.out.println(Calc(a, b, "+"));
+        System.out.println(Calc(a, b, "/"));
+        System.out.println(Calc(a, b, "**"));
+        String equation = "2? + ?1 = 32";
         System.out.println( equation+" -> "+ FillTheGaps(equation));
     }
 
@@ -49,6 +49,7 @@ public class Task1 {
     public static void FindFactorial(String[] args) {
         Map<Integer, Integer> fact = new HashMap<Integer, Integer>();
         Scanner iScanner = new Scanner(System.in);
+        System.out.println("Write a number to calculate n!");
         int n = iScanner.nextInt();
         iScanner.close();
         System.out.println(factorial(n, fact));
@@ -94,8 +95,9 @@ public class Task1 {
     }
     
     public static String FillTheGaps(String eq) {
-        int numOfQue = eq.split("\\?").length - 1;
+        int numOfQue = CountOccurrences(eq);
         System.out.println(numOfQue);
+        
         String answer = CheckOneQue(eq, numOfQue);        
 
         return answer;
@@ -103,10 +105,11 @@ public class Task1 {
     }
     
     public static String CheckOneQue(String eq, int num) {
+
         String sol = "No solution";
         if (num == 1) {
             for (int i = 0; i < 10; i++) {
-                String temp=eq.replaceFirst("\\?", String.valueOf(i));
+                String temp = eq.replaceFirst("\\?", String.valueOf(i));
                 String[] words = temp.split("[+=]");
                 for (int j = 0; j < words.length; j++) {
                     words[j] = words[j].trim();
@@ -115,16 +118,26 @@ public class Task1 {
                     return temp;
             }
             return "No solution";
-        }
-        else {
+        } else {
 
             for (int i = 0; i < 10; i++) {
                 String recursive = CheckOneQue(eq.replaceFirst("\\?", String.valueOf(i)), num - 1);
                 if (sol != recursive)
                     return recursive;
             }
-            
+
         }
         return "None";
+    }
+    
+
+    public static int CountOccurrences(String eqation) {
+        int count = 0;
+        for (int i = 0; i < eqation.length(); i++) {
+            if (eqation.charAt(i) == '?') {
+                count+=1;
+            }
+        }
+        return count;
     }
 }
