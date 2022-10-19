@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.FileHandler;
@@ -48,7 +49,17 @@ public class Task2 {
         logger.info(randomArray.toString());
         logger.info(BubbleSort(randomArray, logger).toString());
 
-        System.out.println(Calc(4, 5, "/", logger));
+        System.out.println(Calc(4, 7, "/", logger));
+
+
+        File directoryPath = new File("C:/Users/Егор/Documents/Java/HW/HW2");
+        String contents[] = directoryPath.list();
+        String element =new String();
+        for (int i = 0; i < contents.length; i++) {
+            element = contents[i].substring(contents[i].lastIndexOf('.'));
+            System.out.println(String.join(" ", element ));
+        }
+
 
     }
     
