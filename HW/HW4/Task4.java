@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -124,11 +126,11 @@ public class Task4 {
         for (int i = 0; i < infixLinkedList.size(); i++) {
             if (String.valueOf(infixLinkedList.get(i)).equals("(")) {
                 LinkedList<String> sublistInBrackets = new LinkedList<>();
-                
+
                 int indexSublistInBrackets = i + 1;
                 int startingNode = indexSublistInBrackets;
                 //3+(4*(5+5)*3) -> start= 2, index=5 -> beacket into 2, remove 3,4,5,6 -> 5-2+1=index-start+1
-                
+
                 for (int indexBrackets = 0; indexBrackets < infixLinkedList.size(); indexBrackets++) {
                     if (infixLinkedList.get(indexBrackets).equals("(")) {
                         int indexOpenBracket = indexBrackets;
@@ -148,18 +150,18 @@ public class Task4 {
                             newValue.add(infixLinkedList.get(j));
                         }
                         infixLinkedList.set(indexOpenBracket, InfixToPostfixList(newValue).get(0));
-                        for (int j = indexOpenBracket+1; j < indexCloseBracket; j++) {
+                        for (int j = indexOpenBracket + 1; j < indexCloseBracket; j++) {
                             infixLinkedList.remove(j);
-                        }       
+                        }
                     }
-                    
+
                 }
-                
+
                 // while (!infixLinkedList.get(indexSublistInBrackets).equals(")")) {
                 //     if (infixLinkedList.get(indexSublistInBrackets).equals("(")) {
                 //         sublistInBrackets.add(InfixToPostfixList(infixLinkedList)
                 //                 .subList(indexSublistInBrackets + 1, infixLinkedList.size()).get(0));
-                        
+
                 //     } else {
                 //         sublistInBrackets.add(infixLinkedList.get(indexSublistInBrackets));
 
@@ -199,6 +201,80 @@ public class Task4 {
         }
         return infixLinkedList;
     }
+
+    //Задача с семинара по переводу чисел в Римские
+    public static String integertoRoman(int arabic) {
+        Map<Integer,String> dict = new HashMap<>();
+        dict.put( 1000, "M");
+        dict.put( 500, "D");
+        dict.put( 100, "C");
+        dict.put( 50, "L");
+        dict.put(10, "X");
+        dict.put( 5,"V");
+        dict.put(1, "I");
+        dict.put( 900, "CM");
+        dict.put( 400, "CD");
+        dict.put(90, "XC");
+        dict.put( 40,"XL");
+        dict.put( 9,"IX");
+        dict.put( 4,"IV");
+        StringBuilder romanNumber = new StringBuilder();
+        while (arabic > 0) {
+            while (arabic / 1000 >= 1) {
+                romanNumber.append(dict.get(1000));
+                arabic -= 1000;
+            }
+            while (arabic / 100 >= 1) {
+                if (dict.containsKey(arabic - arabic % 100)) {
+                    romanNumber.append(dict.get(arabic - arabic % 100));
+                    arabic = arabic % 100;
+                }
+                if (arabic >= 500) {
+                    romanNumber.append(dict.get(500));
+                    arabic = arabic - 500;
+                }
+                else {
+                    if (arabic >= 100){
+                        romanNumber.append(dict.get(100));
+                        arabic -=100;
+                    }
+                }
+            }
+            while (arabic / 10 >= 1) {
+                if (dict.containsKey(arabic - arabic % 10)) {
+                    romanNumber.append(dict.get(arabic - arabic % 10));
+                    arabic = arabic % 10;
+                }
+                if (arabic >= 50) {
+                    romanNumber.append(dict.get(50));
+                    arabic -=50;
+                }
+                else {
+                    if (arabic >= 10){
+                        romanNumber.append(dict.get(10));
+                        arabic -=10;
+                    }
+                }
+            }
+            while (arabic> 0) {
+                if (dict.containsKey(arabic)) {
+                    romanNumber.append(dict.get(arabic));
+                    arabic = 0;
+                }
+                if (arabic >= 5) {
+                    romanNumber.append(dict.get(5));
+                    arabic -=5;
+                }
+                else {
+                    if (arabic >= 1){
+                        romanNumber.append(dict.get(1));
+                        arabic -=1;
+                    }
+                }
+            }
+        }
+        return romanNumber.toString();
+        }
 }
     
     //Реализуйте очередь с помощью LinkedList со следующими методами:enqueue() - помещает элемент в конец очереди, dequeue() - 
