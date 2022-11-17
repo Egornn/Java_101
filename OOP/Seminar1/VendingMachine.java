@@ -3,18 +3,11 @@ import java.util.ArrayList;
 
 public class VendingMachine {
     
-   
-
     private ArrayList<Product> assortment = new ArrayList<>();
-    
-
-
-    public void addProduct(Product item) {
+   
+    private void addProduct(Product item) {
         this.assortment.add(item);
     }
-
-    
-
 
     public void initProducts(ArrayList<Product> items) {
         for (Product item : items) {
