@@ -1,9 +1,15 @@
+package hw2;
+import util.StudyGroupIterator;
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import util.StudyGroupIterator;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class StudyGroup implements StudyGroupService{
+public class StudyGroup extends StudyGroupIterator implements StudyGroupService, Iterable{
     private ArrayList<Student> students  =new ArrayList<>();
     private Teacher lecturer = new Teacher();
 
@@ -25,6 +31,16 @@ public class StudyGroup implements StudyGroupService{
         }
         this.lecturer = new Teacher(teacher);
 
+    }
+    @Override
+    public void removeStudentByName(String removed) {
+        for (int i = 0; i < this.students.size(); i++) {
+            if (this.students.get(i).name.equals(removed)) {
+                this.students.remove(i--);
+            }
+            
+        }
+        
     }
     @Override
     public StudyGroup generateStudyGroup(String teacherPath, String studentPath) {
@@ -61,14 +77,55 @@ public class StudyGroup implements StudyGroupService{
         toStirngBuilder.append(String.format("Teacher is %S. ", this.lecturer));
         toStirngBuilder.append(String.format("Students are "));
         for (int i = 0; i < this.students.size() - 1; i++) {
-            toStirngBuilder.append(String.format("%S, ", this.students.get(i)));
+            toStirngBuilder.append(String.format("%s, ", this.students.get(i)));
         }
         if (this.students.size() == 0) {
             toStirngBuilder.append("not presented.");
             return toStirngBuilder.toString();
         }
-        toStirngBuilder.append(String.format("%S.", this.students.get(this.students.size() - 1)));
+        toStirngBuilder.append(String.format("%s.", this.students.get(this.students.size() - 1)));
         return toStirngBuilder.toString();
 
     }
+    @Override
+    public boolean hasNext() {
+        // TODO Auto-generated method stub
+        return (super.humanInd <= this.students.size());
+    }
+
+    @Override
+    public Human next() {
+        // TODO Auto-generated method stub
+        
+        if (super.humanInd == this.students.size()) {
+            super.humanInd++;
+            return lecturer;
+        }    
+        
+        return this.students.get(super.humanInd++);
+    }
+   
+
+    @Override
+    public Iterator<Human> iterator() {
+        ArrayList<Human> human = new ArrayList<>();
+        human.addAll(this.students);
+        human.add(lecturer);
+        Iterator<Human> iter = human.iterator();
+        // TODO Auto-generated method stub
+        return iter;
+
+    }
+   
+    @Override
+        public void remove() {
+            // TODO Auto-generated method stub
+            if (super.humanInd < this.students.size()) {
+                this.students.remove((int) super.humanInd);
+            }
+            else if (super.humanInd == this.students.size()){
+                this.lecturer = new Teacher();
+            }
+        }
+   
 }

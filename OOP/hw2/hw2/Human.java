@@ -1,4 +1,5 @@
-public class Human {
+package hw2;
+public class Human  {
     protected String name;
     
 
@@ -13,4 +14,6 @@ public class Human {
     public String toString() {
         return this.name.toString();
     }
+
+    
 }

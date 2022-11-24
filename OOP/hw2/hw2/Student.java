@@ -1,4 +1,5 @@
-public class Student extends Human {
+package hw2;
+public class Student extends Human  {
     
 
     public Student(String name) {
@@ -8,4 +9,5 @@ public class Student extends Human {
     public Student() {
         super.name = "Default student";
     }
+    
 }
