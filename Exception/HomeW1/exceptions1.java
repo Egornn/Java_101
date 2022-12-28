@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.logging.Logger;
+import java.lang.Exception;
 
 public class exceptions1 {
     
